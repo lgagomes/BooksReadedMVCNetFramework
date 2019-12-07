@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 
 namespace BooksReadedMVC.Models
 {
-    public class AuthorModel : IModel<Author>, IDisposable
+    public class AuthorModel : IDisposable
     {
         private readonly SqlConnection _connection;
 
@@ -19,17 +19,7 @@ namespace BooksReadedMVC.Models
         {
             _connection.Close();
         }
-
-        public void Edit(Author entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Author GetById(int Id)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public List<Author> GetList()
         {
             List<Author> authors = new List<Author>();
@@ -65,11 +55,6 @@ namespace BooksReadedMVC.Models
                 IdAuthor = (int)dataReader["IdAuthor"],
                 Name = (string)dataReader["Name"]
             };
-        }
-
-        public void Save(Author entity)
-        {
-            throw new NotImplementedException();
         }
     }
 }
