@@ -1,17 +1,21 @@
 ﻿using BooksReadedMVC.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace BooksReadedMVC.Controllers
 {
-    public class AuthorController : Controller
+    public class BookController : Controller
     {
-        // GET: Authors
+        // GET: Books
         public ActionResult Index()
         {
-            using(AuthorModel model = new AuthorModel())
+            using (BookModel model = new BookModel())
             {
                 return View(model.GetList());
-            }            
+            }
         }
     }
 }

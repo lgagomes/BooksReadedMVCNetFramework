@@ -1,4 +1,4 @@
-﻿@model List<BooksReadedMVC.Models.Author>
+﻿@model List<BooksReadedMVC.Models.Book>
 
 @{
     ViewBag.Title = "Index";
@@ -10,24 +10,26 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet"
           asp-href-include="/lib/bootstrap/dist/**/*.min.css"
-          asp-href-exclude="**/*-reboot*,**/*-grid*" />    
-    <title>Authors</title>
+          asp-href-exclude="**/*-reboot*,**/*-grid*" />
+    <title>Books</title>
 </head>
 <body>
     <div class="container">
         <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>Id</th>
-                    <th>Author's Name</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Year of Publication</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var author in Model)
+                @foreach (var book in Model)
                 {
                     <tr>
-                        <td>@author.IdAuthor</td>
-                        <td>@author.Name</td>
+                        <td>@book.Title</td>
+                        <td>@book.Author.Name</td>
+                        <td>@book.YearPublication</td>
                     </tr>
                 }
             </tbody>
