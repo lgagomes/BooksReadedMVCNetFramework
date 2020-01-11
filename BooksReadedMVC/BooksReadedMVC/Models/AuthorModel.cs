@@ -56,5 +56,26 @@ namespace BooksReadedMVC.Models
                 Name = (string)dataReader["Name"]
             };
         }
+
+        public void Create(Author author)
+        {
+            try
+            {
+                using (_connection)
+                {
+                    if (_connection.State == ConnectionState.Open)
+                    {
+                        SqlCommand sqlCommand = new SqlCommand(Resources.Author.Insert, _connection);
+                        sqlCommand.Parameters.AddWithValue("@Name", author.Name);
+                        sqlCommand.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw new Exception($"Error at AuthorRepository, 'Create' method {Environment.NewLine}{ex.Message}",
+                    ex.InnerException);
+            }
+        }
     }
 }
