@@ -10,15 +10,27 @@
     <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet"
           asp-href-include="/lib/bootstrap/dist/**/*.min.css"
-          asp-href-exclude="**/*-reboot*,**/*-grid*" />    
+          asp-href-exclude="**/*-reboot*,**/*-grid*" />
     <title>Authors</title>
 </head>
 <body>
     <div class="container">
+        @using (Html.BeginForm("Index", "Author", FormMethod.Get))
+        {
+            <div class="input-group">
+                @Html.TextBox("search", null, new { @class = "form-control", @placeholder = "Inform a name to search" })
+                <span class="input-group-btn">
+                    <button type="submit" name="submit" value="Search" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </span>
+            </div>
+        }
+
         <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>Author's Name</th>
+                    <th>@Html.ActionLink("Author's Name", "Index", new { sortOrder = ViewBag.NameSortParm })</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,6 +38,9 @@
                 {
                     <tr>
                         <td>@author.Name</td>
+                        <td>
+                            <button class="btn btn-primary edit" data-id="@author.IdAuthor">Edit (not implemented yet) <i class="glyphicon glyphicon-edit"></i></button>
+                        </td>
                     </tr>
                 }
             </tbody>

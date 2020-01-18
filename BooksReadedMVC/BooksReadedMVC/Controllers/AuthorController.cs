@@ -1,16 +1,23 @@
 ﻿using BooksReadedMVC.Models;
 using System.Web.Mvc;
+using System.Linq;
 
 namespace BooksReadedMVC.Controllers
 {
     public class AuthorController : Controller
     {
         // GET: Authors
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string search)
         {
             using(AuthorModel model = new AuthorModel())
             {
-                return View(model.GetList());
+                ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+                return !string.IsNullOrWhiteSpace(search)
+                    ? View(model.GetList().Where(x => x.Name.ToUpper().Contains(search.ToUpper())).ToList())
+                    : string.Equals(sortOrder, "name_desc")
+                        ? View(model.GetList().OrderByDescending(x => x.Name).ToList())
+                        : View(model.GetList().OrderBy(x => x.Name).ToList());
             }            
         }
 
