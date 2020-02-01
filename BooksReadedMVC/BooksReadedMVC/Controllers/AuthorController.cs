@@ -1,23 +1,29 @@
 ﻿using BooksReadedMVC.Models;
-using System.Web.Mvc;
 using System.Linq;
+using System.Web.Mvc;
+using X.PagedList;
 
 namespace BooksReadedMVC.Controllers
 {
     public class AuthorController : Controller
     {
+        private const int ELEMENTS_PER_PAGE = 5;
+
         // GET: Authors
-        public ActionResult Index(string sortOrder, string search)
+        public ActionResult Index(string sortOrder, string search, int? page)
         {
             using(AuthorModel model = new AuthorModel())
             {
                 ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-                return !string.IsNullOrWhiteSpace(search)
-                    ? View(model.GetList().Where(x => x.Name.ToUpper().Contains(search.ToUpper())).ToList())
-                    : string.Equals(sortOrder, "name_desc")
-                        ? View(model.GetList().OrderByDescending(x => x.Name).ToList())
-                        : View(model.GetList().OrderBy(x => x.Name).ToList());
+                var authorsList = 
+                    !string.IsNullOrWhiteSpace(search)
+                        ? model.GetList().Where(x => x.Name.ToUpper().Contains(search.ToUpper())).ToList()
+                        : string.Equals(sortOrder, "name_desc")
+                            ? model.GetList().OrderByDescending(x => x.Name).ToList()
+                            : model.GetList().OrderBy(x => x.Name).ToList();
+
+                return View(authorsList.ToPagedList(page ?? 1, ELEMENTS_PER_PAGE));
             }            
         }
 

@@ -1,9 +1,14 @@
-﻿@model List<BooksReadedMVC.Models.Author>
+﻿@using X.PagedList;
+@using X.PagedList.Mvc;
+
+@model IPagedList<BooksReadedMVC.Models.Author>
 
 @{
     ViewBag.Title = "Index";
 }
 <!DOCTYPE html>
+
+
 
 <html>
 <head>
@@ -18,10 +23,13 @@
         @using (Html.BeginForm("Index", "Author", FormMethod.Get))
         {
             <div class="input-group">
-                @Html.TextBox("search", null, new { @class = "form-control", @placeholder = "Inform a name to search" })
+                @Html.TextBox("search", null, new {@id="searchInput",  @class = "form-control", @placeholder = "Inform a name to search" })
                 <span class="input-group-btn">
                     <button type="submit" name="submit" value="Search" class="btn btn-primary">
                         <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    <button class="btn btn-primary" onclick="document.getElementById('searchInput').value = ''">
+                        <span class="glyphicon glyphicon-trash"></span>
                     </button>
                 </span>
             </div>
@@ -48,5 +56,7 @@
     </div>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Author", new { page }));
 </body>
 </html>
