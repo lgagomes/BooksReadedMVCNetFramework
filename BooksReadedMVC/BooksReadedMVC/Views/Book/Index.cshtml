@@ -1,4 +1,7 @@
-﻿@model List<BooksReadedMVC.Models.Book>
+﻿@using X.PagedList;
+@using X.PagedList.Mvc;
+
+@model IPagedList<BooksReadedMVC.Models.Book>
 
 @{
     ViewBag.Title = "Index";
@@ -15,18 +18,36 @@
 </head>
 <body>
     <div class="container">
+        @using (Html.BeginForm("Index", "Book", FormMethod.Get))
+        {
+            <div class="input-group">
+                @Html.TextBox("titleSearch", null, new { @id = "searchTitle", @class = "form-control", @placeholder = "Inform a title to search" })
+                @Html.TextBox("authorSearch", null, new { @id = "searchAuthor", @class = "form-control", @placeholder = "Inform an author to search" })
+                <span class="input-group-btn">
+                    <button type="submit" name="submit" value="Search" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                    <button class="btn btn-primary" onclick="Clear()">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </span>
+            </div>
+        }
+
         <table class="table table-responsive">
             <thead>
                 <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Year of Publication</th>
+                    <th>@Html.ActionLink("Reading Order", "Index", new { sortOrder = ViewBag.ReadingOrderSortParam })</th>
+                    <th>@Html.ActionLink("Book", "Index", new { sortOrder = ViewBag.TitleSortParam })</th>
+                    <th>@Html.ActionLink("Author", "Index", new { sortOrder = ViewBag.AuthorSortParam })</th>
+                    <th>@Html.ActionLink("Year of Publication", "Index", new { sortOrder = ViewBag.PublicationYearSortParam })</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach (var book in Model)
                 {
                     <tr>
+                        <td>@book.IdBook</td>
                         <td>@book.Title</td>
                         <td>@book.Author.Name</td>
                         <td>@book.YearPublication</td>
@@ -37,5 +58,15 @@
     </div>
     <script src="js/jquery-2.1.4.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", "Book", new { page }))
 </body>
 </html>
+
+<script>
+    function Clear()
+    {
+        document.getElementById('searchTitle').value = '';
+        document.getElementById('searchAuthor').value = '';
+    }
+</script>    

@@ -124,9 +124,12 @@
 	Book.Title,
 	Book.YearPublication,
 	Author.Name
-
+	
 FROM 
 	Book
-	INNER JOIN Author on Book.IdAuthor = Author.IdAuthor</value>
+	INNER JOIN Author on Book.IdAuthor = Author.IdAuthor
+	
+ORDER BY
+	Book.IdBook</value>
   </data>
 </root>

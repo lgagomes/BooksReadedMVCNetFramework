@@ -67,10 +67,13 @@ namespace BooksReadedMVC.Resources {
         ///	Book.Title,
         ///	Book.YearPublication,
         ///	Author.Name
-        ///
+        ///	
         ///FROM 
         ///	Book
-        ///	INNER JOIN Author on Book.IdAuthor = Author.IdAuthor.
+        ///	INNER JOIN Author on Book.IdAuthor = Author.IdAuthor
+        ///	
+        ///ORDER BY
+        ///	Book.IdBook.
         /// </summary>
         internal static string GetBookBase {
             get {

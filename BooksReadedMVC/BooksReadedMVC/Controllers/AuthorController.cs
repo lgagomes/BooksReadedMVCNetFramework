@@ -14,12 +14,12 @@ namespace BooksReadedMVC.Controllers
         {
             using(AuthorModel model = new AuthorModel())
             {
-                ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+                ViewBag.NameSortParm = string.IsNullOrEmpty(sortOrder) ? "nameDesc" : "";
 
                 var authorsList = 
                     !string.IsNullOrWhiteSpace(search)
                         ? model.GetList().Where(x => x.Name.ToUpper().Contains(search.ToUpper())).ToList()
-                        : string.Equals(sortOrder, "name_desc")
+                        : string.Equals(sortOrder, "nameDesc")
                             ? model.GetList().OrderByDescending(x => x.Name).ToList()
                             : model.GetList().OrderBy(x => x.Name).ToList();
 
